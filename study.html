@@ -1,0 +1,135 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="content-language" content="zh-cn">
+<meta content="width=device-width,initial-scale=1,maximum-scale=1" name="viewport">
+<title>佩伦导航 - 分类网站集合</title>
+<meta name="description" content="佩伦导航是各类网站的集合，依据类型进行导航。佩伦导航便于各类用户快速找到自己想要的网站。佩伦导航具有较高的实用性，无任何类型的广告，简洁易用。佩伦导航致力于成为您的浏览器主页。欢迎使用佩伦导航。">
+<meta name="keywords" content="佩伦导航,导航页,导航,网址导航">
+<link rel="stylesheet" type="text/css" href="css/reset.css">
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="js/knowledge.js"></script>
+</head>
+<body style="display:none" class="test-5">
+<div class="bgimg">
+</div>
+<script type="text/javascript">
+$(".bgimg").css("background-image",'url("https://s1.ax1x.com/2020/05/30/tQdmgU.jpg")')
+$(function(){$("body").fadeIn(0)})
+function count() {
+    var EndTime = new Date(2021, 5, 7);
+    var NowTime = new Date();
+    var t = EndTime.getTime() - NowTime.getTime();
+    var d = Math.ceil(t / 1000 / 60 / 60 / 24);
+    return(d)
+}
+
+function getNowFormatDate() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = year + " 年 " + month + " 月 " + strDate + " 日" ;
+    return currentdate;
+}
+</script>
+<div class="navbar transparent">
+	<header>
+	<h1 class="title transparent"><a href="https://sblpl.cn">佩伦导航 - 分类网站集合</a></h1>
+	<a class="subtitle transparent" onclick="location.reload()"></a>
+	</header>
+</div>
+<div class="con transparent" style="text-align:center;font-size: 2.8rem;">
+	<div class="title transparent"><img src="img/icoc/shijian.ico" alt="时间"><span>当前时间</span></div>
+	<span id="date" style="font-family: Microsoft YaHei;">2020-05-30 上午00:00:00</span>
+</div>
+<div class="con transparent" style="text-align:center;font-size: 2.6rem;">
+	<div class="title transparent"><img src="img/icoc/kebiao.png" alt="课表"><span>课程表</span></div>
+	<span id="yiwancheng" style="font-family: cursive;opacity: 0.3;text-shadow: 1px 1px 1px transparent;">语文 数学 英语 </span>
+	<span id="weiwancheng" style="font-family: cursive;">物理 化学 生物 自习 自习 自习</span>
+</div>
+<div class="con transparent" style="text-align:left;font-size: 2.6rem;">
+	<div class="title transparent"><img src="img/icoc/xuexi.png" alt="知识"><span>知识速记</span></div>
+	<b id="knowledge"></b>
+	<span id="next" style="font-family: NSimSun"></span>
+</div>
+<script type="text/javascript">
+	$(".subtitle").html("距离高考胜利还有 " + count() + " 天")
+	var i1 = self.setInterval("clock()", 1000);
+	var i2 = self.setInterval("study()", 180000);
+	var i3 = self.setInterval("gaikebiao()", 30000);
+	var d = new Date();
+	var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+	var kecheng = kebiao.split("#")
+	var richeng = new Array(8*60+20, 9*60+10, 10*60+30, 11*60+20, 12*60+10, 14*60+0, 14*60+50, 15*60+40, 16*60+30, 17*60+40);
+	jinri = new Array()
+
+	for (var i = 0; i < kecheng.length; i++) {
+		jinri.push(kecheng[i].split("/")[d.getDay()])
+	}
+
+	clock()
+	study()
+	gaikebiao()
+
+	function clock() {
+		d = new Date();
+		//$("#date").html(getNowFormatDate() + " " + weeks[d.getDay()] + "&nbsp;&nbsp;" + d.toLocaleTimeString() + "&nbsp;&nbsp;&nbsp;还有 " + count() + " 天高考")
+		$("#date").html(getNowFormatDate() + "&nbsp;&nbsp;&nbsp;&nbsp;" + weeks[d.getDay()] + "&nbsp;&nbsp;&nbsp;&nbsp;" + d.getHours() + "：" + d.getMinutes())
+	}
+
+	function gaikebiao() {
+		jinri = new Array()
+
+		for (var i = 0; i < kecheng.length; i++) {
+			jinri.push(kecheng[i].split("/")[d.getDay()])
+		}
+		var i;
+		$("#yiwancheng").html("")
+		for (i = 0; i < richeng.length; i++) {
+			if(d.getHours() * 60 + d.getMinutes() >= richeng[i]){
+				$("#yiwancheng").html($("#yiwancheng").html() + jinri[i] + " ")
+			}else break;
+		}
+		$("#weiwancheng").html("")
+		for (; i < jinri.length; i++) {
+			$("#weiwancheng").html($("#weiwancheng").html() + jinri[i] + " ")
+		}
+	}
+
+	function study() {
+		var choice = Math.floor(Math.random() * 100)
+		if (choice < 40) {
+			// 英语单词
+			list = words.split("#")
+			var word = list[Math.floor(Math.random() * list.length)]
+			for (i = 0; i < word.length; i++) {
+				if (word.charAt(i) == " ") {
+					$("#knowledge").html(word.slice(0, i).replace(RegExp("[*]", "g"), " "))
+					$("#next").html("&nbsp;" + word.slice(i))
+					break;
+				}
+			}
+		} else if (choice < 70) {
+			// 语文成语
+			list = yuwen.split("#")
+			var word = list[Math.floor(Math.random() * list.length)]
+			$("#knowledge").html("")
+			$("#next").html(word)
+		} else {
+			// 生物知识点
+			list = shengwu.split("#")
+			var word = list[Math.floor(Math.random() * list.length)]
+			$("#knowledge").html("")
+			$("#next").html(word)
+		}
+	}
+</script>
+</body>
+</html>
